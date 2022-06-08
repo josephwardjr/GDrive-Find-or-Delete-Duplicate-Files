@@ -1,11 +1,18 @@
-function myFunction() {
+// function onOpen() {
+//   var ui = SpreadsheetApp.getUi();
+//   ui.createMenu('Duplicate Files').addItem('FindDuplicateFiles').addToUi();
+// }
 
+function FindDuplicateFiles() {
+  // https://spreadsheet.dev/user-input-in-google-sheets-using-prompts
   var ui = SpreadsheetApp.getUi();
-  var personName = ui.prompt("Please enter your name");
-  console.log(personName);
+  // ui.createMenu('Duplicate Files').addItem('myFunction').addToUi();
+  var personName = ui.prompt("What's the name of the folder you're searching?");
+  Logger.log('Searching: ' + personName.getResponseText());
 
   var dApp = DriveApp;
-  var folderIter = dApp.getFoldersByName("EE Textbooks");
+  // var folderIter = dApp.getFoldersByName("EE Textbooks");
+  var folderIter = dApp.getFoldersByName(personName.getResponseText());
   var folder = folderIter.next();
   var filesIter = folder.getFiles();
 
@@ -36,7 +43,7 @@ function myFunction() {
     // filename = filename.substring(0, filename.lastIndexOf('.'));
 
     var lastDotPosition = filename.lastIndexOf(".");
-    console.log('Last dot position: ' + lastDotPosition);
+    // console.log('Last dot position: ' + lastDotPosition); // Used for debugging
     if (lastDotPosition === -1) { }
     else { filename = filename.substring(0, lastDotPosition); }
 
